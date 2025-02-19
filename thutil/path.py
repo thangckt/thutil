@@ -44,7 +44,7 @@ def make_dir_ask_backup(dir_path: str):
 def ask_yes_no(question: str) -> str:
     """Asks a yes/no/backup question and returns the response."""
     while True:
-        answer = input(f"{question} \n\tYour answer (y/n/b): ").strip().lower()
+        answer = input(f"{question} \n\tPlease input your choice (y/n/b): ").strip().lower()
         if answer in ["yes", "y"]:
             return "yes"
         elif answer in ["no", "n"]:
@@ -145,9 +145,7 @@ def collect_files(paths: list[str], patterns: list[str]) -> list[str]:
 
 
 ##### ANCHOR: change path names
-def change_pathname(
-    paths: list[str], old_string: str, new_string: str, replace: bool = False
-) -> None:
+def change_pathname(paths: list[str], old_string: str, new_string: str, replace: bool = False) -> None:
     """change path names
 
     Args:
@@ -206,23 +204,13 @@ def remove_dirs(dirs: list[str]) -> None:
 
 def remove_files_in_paths(files: list, paths: list) -> None:
     """Remove files in the `files` list in the `paths` list."""
-    _ = [
-        Path(f"{p}/{f}").unlink()
-        for p in paths
-        for f in files
-        if Path(f"{p}/{f}").exists()
-    ]
+    _ = [Path(f"{p}/{f}").unlink() for p in paths for f in files if Path(f"{p}/{f}").exists()]
     return
 
 
 def remove_dirs_in_paths(dirs: list, paths: list) -> None:
     """Remove directories in the `dirs` list in the `paths` list."""
-    _ = [
-        shutil.rmtree(f"{p}/{d}")
-        for p in paths
-        for d in dirs
-        if Path(f"{p}/{d}").exists()
-    ]
+    _ = [shutil.rmtree(f"{p}/{d}") for p in paths for d in dirs if Path(f"{p}/{d}").exists()]
     return
 
 
@@ -259,12 +247,6 @@ def scan_dirs(
     Returns:
         list[str]: The paths that meet the conditions.
     """
-    found_paths = [
-        p for p in dirs if all(Path(f"{p}/{f}").exists() for f in with_files)
-    ]
-    found_paths = [
-        p
-        for p in found_paths
-        if all(not Path(f"{p}/{f}").exists() for f in without_files)
-    ]
+    found_paths = [p for p in dirs if all(Path(f"{p}/{f}").exists() for f in with_files)]
+    found_paths = [p for p in found_paths if all(not Path(f"{p}/{f}").exists() for f in without_files)]
     return found_paths
