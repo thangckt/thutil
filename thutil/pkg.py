@@ -22,10 +22,15 @@ def create_logger(
         "ERROR": logging.ERROR,
         "CRITICAL": logging.CRITICAL,
     }
+    # format_map = {
+    #     "debug": "%(name)s-%(levelname)s: %(message)s | %(funcName)s:%(lineno)d",
+    #     "info": "%(name)s-%(levelname)s: %(message)s",
+    #     "file": "%(asctime)s | %(name)s-%(levelname)s: %(message)s",
+    # }
     format_map = {
-        "debug": "%(name)s-%(levelname)s: %(message)s | %(funcName)s:%(lineno)d",
-        "info": "%(name)s-%(levelname)s: %(message)s",
-        "file": "%(asctime)s | %(name)s-%(levelname)s: %(message)s",
+        "debug": "%(levelname)s: %(message)s | %(funcName)s:%(lineno)d",
+        "info": "%(levelname)s: %(message)s",
+        "file": "%(asctime)s | %(levelname)s: %(message)s",
     }
 
     # Set console and file logging levels
