@@ -45,28 +45,21 @@ def validate_config(
     return
 
 
-def load_setting_file(filename: Union[str, Path]) -> dict:
-    """Load data from a JSON or YAML file.
+def load_config(filename: Union[str, Path]) -> dict:
+    """Load data from a JSON or YAML file. The YAML file can contain variable-interpolation, will be processed by [OmegaConf](https://omegaconf.readthedocs.io/en/2.2_branch/usage.html#variable-interpolation).
 
-    Parameters
-    ----------
-    filename : str or os.PathLike
-        The filename to load data from, whose suffix should be .json, .yaml, or .yml
+    Args:
+    filename (Union[str, Path]): The filename to load data from, whose suffix should be .json, jsonc, .yaml, or .yml
 
-    Returns
-    -------
-    dict
+    Returns:
         jdata: (dict) The data loaded from the file
-
-    Raises
-    ------
-    ValueError
-        If the file format is not supported
     """
     if Path(filename).suffix in [".json", ".jsonc"]:
         jdata = load_jsonc(filename)
     elif Path(filename).suffix in [".yaml", ".yml"]:
-        jdata = read_yaml(filename)
+        from omegaconf import OmegaConf
+        conf = OmegaConf.load(filename)
+        jdata = OmegaConf.to_container(conf, resolve=True)
     else:
         raise ValueError(f"Unsupported file format: {filename}")
     return jdata

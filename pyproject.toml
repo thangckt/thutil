@@ -9,7 +9,7 @@ description = "General utilities for Python"
 authors = [{ name = "C.Thang Nguyen", email = "thangckt@gmail.com" }]
 license = { file = "LICENSE.md" }
 
-dependencies = ['pyyaml', 'requests', "cerberus"]
+dependencies = ['pyyaml', 'requests', "cerberus", "omegaconf"]
 
 requires-python = ">=3.7"
 
@@ -24,7 +24,7 @@ fallback_version = "0.1"
 
 [tool.setuptools.packages.find]
 include = ["thutil*"]
-exclude = ["dev_tool*", "docs_site*"]
+exclude = ["dev_tool*", "_docs*"]
 
 
 [tool.setuptools.package-data]
