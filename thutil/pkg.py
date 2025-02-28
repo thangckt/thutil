@@ -2,7 +2,7 @@ import logging
 import subprocess
 from pathlib import Path
 
-from thutil.stuff import fill_text_center, fill_text_left  # noqa: F401
+from thutil.stuff import text_fill_center, text_fill_left  # noqa: F401
 
 
 def create_logger(
@@ -129,7 +129,7 @@ def dependency_info(
     ],
 ) -> str:
     """Get the dependency information"""
-    text = "{}\n".format(fill_text_center("Dependencies", max_length=70))
+    text = "{}\n".format(text_fill_center("Dependencies", max_length=70))
     for pkg in modules:
         try:
             mm = __import__(pkg)
