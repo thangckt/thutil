@@ -25,3 +25,21 @@ def fill_text_box(input_text="", fill=" ", sp="|", max_length=60):
     strs = input_text.center(max_length, fill)
     box_text = sp + strs[1 : len(strs) - 1 :] + sp
     return box_text
+
+
+def color_text(text: str, color: str = "red") -> str:
+    """ANSI escape codes for color the text."""
+    color_dict = {
+        "red": "\033[91m",
+        "green": "\033[92m",
+        "yellow": "\033[93m",
+        "blue": "\033[94m",
+        "purple": "\033[95m",
+        "cyan": "\033[96m",
+        "white": "\033[97m",
+        "bold": "\033[1m",
+        "underline": "\033[4m",
+        "nocolor": "\033[0m",  # reset color
+    }
+    text = color_dict[color] + text + color_dict["nocolor"]
+    return text
