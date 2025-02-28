@@ -41,7 +41,7 @@ def validate_config(
     v = Validator(allow_unknown=allow_unknown, require_all=require_all)
     res = v.validate(config_dict, schema_dict)
     if not res:
-        raise ValueError(f"Error in config file {Path(config_file).as_posix()} \n{v.errors}")
+        raise ValueError(f"Error in the configuration file: {Path(config_file).as_posix()} \n{v.errors}")
     return
 
 
@@ -58,6 +58,7 @@ def load_config(filename: Union[str, Path]) -> dict:
         jdata = load_jsonc(filename)
     elif Path(filename).suffix in [".yaml", ".yml"]:
         from omegaconf import OmegaConf
+
         conf = OmegaConf.load(filename)
         jdata = OmegaConf.to_container(conf, resolve=True)
     else:
@@ -88,9 +89,7 @@ def unpack_dict(nested_dict: dict) -> dict:
             if key2 not in flat_dict:
                 flat_dict[key2] = val2
             else:
-                raise ValueError(
-                    f"Key `{key2}` is used multiple times in the same level of the nested dictionary. Please fix it before unpacking dict."
-                )
+                raise ValueError(f"Key `{key2}` is used multiple times in the same level of the nested dictionary. Please fix it before unpacking dict.")
     return flat_dict
 
 

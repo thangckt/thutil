@@ -25,7 +25,7 @@ def make_dir_ask_backup(dir_path: str):
     """Make a directory and ask for backup if the directory already exists."""
     if Path(dir_path).is_dir():
         ans = ask_yes_no(
-            f"""The directory "{dir_path}" already existed. Select an action: [yes/no/backup]?\n  Yes: overwrite the existing directory and continue/update uncompleted tasks.\n  No: interrupt and exit process.\n  Backup: backup the existing directory and perform fresh tasks."""
+            f"""The directory "{dir_path}" already existed. Select an action: [yes/no/backup]?\n  * Yes: overwrite the existing directory and continue/update uncompleted tasks.\n  * No: interrupt and exit process.\n  * Backup: backup the existing directory and perform fresh tasks."""
         )
         if ans == "yes":
             print("\tOverwrite the existing directory")
