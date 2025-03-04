@@ -173,11 +173,11 @@ plugins:
 ### Site content
 ###=======================================
 nav:
-  - home: http://thang.eu.org
+  - home: http://thangckt.github.io
   # - molbuilder: https://thangckt.github.io/molbuilder
-  - alff: http://thang.eu.org/alff_doc
-  - thmd: http://thang.eu.org/thmd_doc
-  - thml: http://thang.eu.org/thml_doc
+  - alff: http://thangckt.github.io/alff_doc
+  - thmd: http://thangckt.github.io/thmd_doc
+  - thml: http://thangckt.github.io/thml_doc
 
   - thutil:
       - About: index.md
@@ -189,13 +189,13 @@ nav:
         - sth2sth: sth2sth.md
       - API: api.md
 
-  - hpc: http://thang.eu.org/cluster
-  - ref: http://thang.eu.org/ref
-  - odd: http://thang.eu.org/odd
-  - tv: http://thang.eu.org/tv
-  - blog: http://thang.eu.org/blog
+  - hpc: http://thangckt.github.io/cluster
+  - ref: http://thangckt.github.io/ref
+  - odd: http://thangckt.github.io/odd
+  - tv: http://thangckt.github.io/tv
+  - blog: http://thangckt.github.io/blog
 
   # - NextChat: http://chat-gpt-next-lvkto5aam-thangcktgmailcoms-projects.vercel.app
-  # - llm: http://thang.eu.org/llm
-  # - 1click_BibTeX: https://thang.eu.org/blog/2024/01/25/bibtex_generator/
-  - email: http://thang.eu.org/email
+  # - llm: http://thangckt.github.io/llm
+  # - 1click_BibTeX: https://thangckt.github.io/blog/2024/01/25/bibtex_generator/
+  - email: http://thangckt.github.io/email
