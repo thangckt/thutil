@@ -28,9 +28,9 @@ def validate_config(
     Raises:
         ValueError: if the config file does not match the schema
     """
-    if config_file:
+    if not config_dict and config_file:
         config_dict = yaml.safe_load(open(config_file))
-    if schema_file:
+    if not schema_dict and schema_file:
         schema_dict = yaml.safe_load(open(schema_file))
 
     if not config_dict:
@@ -41,7 +41,7 @@ def validate_config(
     v = Validator(allow_unknown=allow_unknown, require_all=require_all)
     res = v.validate(config_dict, schema_dict)
     if not res:
-        raise ValueError(f"Error in the configuration file: {Path(config_file).as_posix()} \n{v.errors}")
+        raise ValueError(f"Error in the configuration file: {Path(config_file).as_posix() if config_file else ''} \n{v.errors}")
     return
 
 

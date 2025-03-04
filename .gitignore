@@ -16,6 +16,7 @@
 /*.egg-info/
 /dist
 **/_version.py
+**/__version.py
 
 # ENV
 /venv
