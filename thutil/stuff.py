@@ -1,7 +1,7 @@
-from typing import Generator
-import time
 import base64
 import random
+import time
+from typing import Generator
 
 
 def chunk_list(input_list: list, n: int) -> Generator:
@@ -48,10 +48,9 @@ def text_color(text: str, color: str = "blue") -> str:
     return text
 
 
-
-
-def uui_time():
+def uui_time() -> str:
     timestamp = int(time.time() * 1000)
     rand = random.getrandbits(10)
     unique_value = (timestamp << 10) | rand  # Combine timestamp + random bits
-    return base64.urlsafe_b64encode(unique_value.to_bytes(8, 'big')).decode().rstrip('=')
+    text = base64.urlsafe_b64encode(unique_value.to_bytes(8, "big")).decode().rstrip("=")
+    return text.replace("-", "_")
