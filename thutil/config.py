@@ -41,7 +41,8 @@ def validate_config(
     v = Validator(allow_unknown=allow_unknown, require_all=require_all)
     res = v.validate(config_dict, schema_dict)
     if not res:
-        raise ValueError(f"Error in the configuration file: {Path(config_file).as_posix() if config_file else ''} \n{v.errors}")
+        config_path = Path(config_file).as_posix() if config_file else ''
+        raise ValueError(f"Error in the configuration file: {config_path} \n{v.errors}")
     return
 
 
