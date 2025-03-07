@@ -101,14 +101,14 @@ def _install_package(
         conda_channel (str): conda channel for the package. Default: None. E.g., conda-forge
     """
     try:
-        print(f"Installing the package: `{package_name}` ...")
+        print(f"Installing package: `{package_name}` ...")
         command = f"pip install -U {package_name}"
         if git_repo:
             command = f"pip install -U git+{git_repo}"
         else:
             command = f"conda install -c {conda_channel} {package_name}"
         subprocess.run(command, check=True)
-        print("Installation successful!")
+        print("Install successfully!")
     except subprocess.CalledProcessError as e:
         raise RuntimeError((f"Error while installing the package: {e}"))
     return
