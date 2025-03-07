@@ -67,45 +67,50 @@ def create_logger(
 
 def check_package(
     package_name: str,
-    git_repo: str = None,
     auto_install: bool = False,
-    extra_commands: list[str] = None,
-) -> None:
+    git_repo: str = None,
+    conda_channel: str = None,
+):
     """Check if the required packages are installed"""
     try:
         __import__(package_name)
     except ImportError:
         if auto_install:
-            _install_package(package_name, git_repo)
-            if extra_commands:
-                for command in extra_commands:
-                    subprocess.run(command, check=True)
+            _install_package(package_name, git_repo, conda_channel)
         else:
             raise ImportError(
-                f"Required package `{package_name}` is not installed. Please install the package.",
+                f"Required package `{package_name}` is not installed. Please install it.",
             )
+    return
 
 
-def _install_package(package_name: str, git_repo: str = None) -> None:
-    """Install the required package
+def _install_package(
+    package_name: str,
+    git_repo: str = None,
+    conda_channel: str = None,
+):
+    """Install the required package:
+        - Default using: `pip install -U {package_name}`
+        - If `git_repo` is provided: `pip install -U git+{git_repo}`
+        - If `conda_channel` is provided: `conda install -c {conda_channel} {package_name}`
 
     Args:
     ----
         package_name (str): package name
-        git_repo (str): git path for the package
-
+        git_repo (str): git path for the package. Default: None. E.g., http://somthing.git
+        conda_channel (str): conda channel for the package. Default: None. E.g., conda-forge
     """
     try:
-        print(f"Installing the required packages: `{package_name}` ...")
+        print(f"Installing the package: `{package_name}` ...")
+        command = f"pip install -U {package_name}"
         if git_repo:
             command = f"pip install -U git+{git_repo}"
         else:
-            command = f"pip install -U {package_name}"
+            command = f"conda install -c {conda_channel} {package_name}"
         subprocess.run(command, check=True)
         print("Installation successful!")
     except subprocess.CalledProcessError as e:
-        print(f"Error occurred while installing the package: {e}")
-        raise
+        raise RuntimeError((f"Error while installing the package: {e}"))
     return
 
 
