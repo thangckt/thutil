@@ -41,7 +41,7 @@ def validate_config(
     v = Validator(allow_unknown=allow_unknown, require_all=require_all)
     res = v.validate(config_dict, schema_dict)
     if not res:
-        config_path = Path(config_file).as_posix() if config_file else ''
+        config_path = Path(config_file).as_posix() if config_file else ""
         raise ValueError(f"Error in the configuration file: {config_path} \n{v.errors}")
     return
 
@@ -64,6 +64,10 @@ def load_config(filename: Union[str, Path]) -> dict:
         jdata = OmegaConf.to_container(conf, resolve=True)
     else:
         raise ValueError(f"Unsupported file format: {filename}")
+
+    if not jdata:
+        jdata = {}
+        print(f"WARNING: Empty config file: {filename}")
     return jdata
 
 
