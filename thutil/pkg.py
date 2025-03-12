@@ -145,4 +145,11 @@ def dependency_info(
             text += "{:>12}  {:<12} {}\n".format(pkg, "unknown", "")
         except AttributeError:
             text += "{:>12}  {:<12} {}\n".format(pkg, "", "unknown version or path")
+    ### Python version
+    mm = __import__("sys")
+    text += "{:>12}  {:<12} {}\n".format(
+        "python",
+        "{}.{}.{}".format(mm.version_info.major, mm.version_info.minor, mm.version_info.micro),
+        Path(mm.executable).as_posix(),
+    )
     return text
