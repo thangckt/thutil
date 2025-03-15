@@ -24,7 +24,7 @@ fallback_version = "0.1"
 
 [tool.setuptools.packages.find]
 include = ["thutil*"]
-exclude = ["dev_tool*", "_docs*"]
+exclude = ["1devtool*", "_docs*"]
 
 
 [tool.setuptools.package-data]
