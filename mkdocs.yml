@@ -11,8 +11,8 @@ copyright: Copyright &copy; 2022 <a href="https://thangckt.github.io">thangckt</
 theme:
   name: "material" #  "material"    "mkdocs"    "readthedocs"     'rtd-dropdown'   windmill  bootswatch
   custom_dir: _docs/_overrides
-  logo: 1images/kde_color_128x128.png     #  one-note-128-o.png snake1.png
-  favicon: 1images/kde_color_128x128.png
+  logo: 1images/one-note-128-o.png   # kde_color_128x128.png  one-note-128-o.png snake1.png
+  favicon: 1images/one-note-128-o.png
   highlightjs: true
   features:
     - content.code.annotate
