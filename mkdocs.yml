@@ -189,6 +189,7 @@ nav:
         - sth2sth: sth2sth.md
       - API: api.md
 
+  - molbuilder: http://thangckt.github.io/molbuilder
   - hpc: http://thangckt.github.io/cluster
   - ref: http://thangckt.github.io/ref
   - odd: http://thangckt.github.io/odd
