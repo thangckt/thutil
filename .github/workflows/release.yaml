@@ -1,3 +1,5 @@
+name: Build and release to pypi
+
 on:
   push:
     branches:
@@ -5,7 +7,7 @@ on:
     tags:
       - "v*"
   pull_request:
-name: Build and release to pypi
+
 jobs:
   release-build:
     name: Build and upload distributions
