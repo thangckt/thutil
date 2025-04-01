@@ -43,7 +43,7 @@ jobs:
         run: |
           python _docs/_script/fetch_js.py
 
-      - name: Run Changelog CI: https://github.com/saadmk11/changelog-ci
+      - name: Run Changelog CI  # https://github.com/saadmk11/changelog-ci
         uses: saadmk11/changelog-ci@v1.1.2
         with:
           changelog_filename: _docs/CHANGELOG.md
