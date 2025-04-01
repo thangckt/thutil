@@ -1,12 +1,12 @@
 name: Build and release to pypi
 
 on:
-  push:
-    branches:
-      - main
-    tags:
-      - "v*"
-  pull_request:
+#   push:
+#     branches:
+#       - main
+#     tags:
+#       - "v*"
+#   pull_request:
 
 jobs:
   release-build:
