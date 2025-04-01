@@ -3,10 +3,10 @@
 name: Changelog CI
 
 on:
-#   push:
-#     branches: [main, dev]
-#   pull_request:
-#     types: [ opened ]
+  push:
+    branches: [main, dev]
+  pull_request:
+    types: [ opened ]
 
   # Optionally you can use `workflow_dispatch` to run Changelog CI Manually
   workflow_dispatch:

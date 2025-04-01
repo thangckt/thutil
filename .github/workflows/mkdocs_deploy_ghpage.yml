@@ -1,14 +1,14 @@
 name: mkdocs gh-deploy
 
 on:
-#   workflow_run:
-#     workflows: ["changelog_ci.yml"]
-#     types:
-#       - completed
-  workflow_dispatch:
-    inputs:
-        release_version:
-            description: 'Set Release Version'
+  workflow_run:
+    workflows: ["changelog_ci.yml"]
+    types:
+      - completed
+#   workflow_dispatch:
+#     inputs:
+#         release_version:
+#             description: 'Set Release Version'
   push:
     branches: [main, dev]
     paths-ignore:
@@ -43,11 +43,11 @@ jobs:
         run: |
           python _docs/_script/fetch_js.py
 
-      - name: Run Changelog CI  # https://github.com/saadmk11/changelog-ci
-        uses: saadmk11/changelog-ci@v1.1.2
-        with:
-          changelog_filename: ./_docs/CHANGELOG.md
-          release_version: ${{ github.event.inputs.release_version }} or 'Devel' # Set to 'dev' if not provided
+    #   - name: Run Changelog CI  # https://github.com/saadmk11/changelog-ci
+    #     uses: saadmk11/changelog-ci@v1.1.2
+    #     with:
+    #       changelog_filename: ./_docs/CHANGELOG.md
+    #       release_version: ${{ github.event.inputs.release_version }} or 'Devel' # Set to 'dev' if not provided
 
 
       - name: MkDocs build & deploy site # This will create `gh-pages` branch contain `mkdocs-site`. See https://www.mkdocs.org/user-guide/cli/#mkdocs-gh-deploy
