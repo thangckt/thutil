@@ -1,13 +1,31 @@
 import base64
 import random
+import string
 import time
 from typing import Generator
-import string
+
 
 def chunk_list(input_list: list, n: int) -> Generator:
     """Yield successive n-sized chunks from `input_list`."""
     for i in range(0, len(input_list), n):
         yield input_list[i : i + n]
+
+
+### ANCHOR: index tools
+def unpack_indices(list_inputs: list[int | str]) -> list[int]:
+    """Expand the input list of indices to a list of integers.
+    Eg: list_inputs = [1, 2, "3-5:2", "6-10"]
+    """
+    idx = []
+    for item in list_inputs:
+        if isinstance(item, int):
+            idx.append(item)
+        elif isinstance(item, str):
+            parts = item.split(":")
+            step = int(parts[1]) if len(parts) > 1 else 1
+            start, end = map(int, parts[0].split("-"))
+            idx.extend(range(start, end + 1, step))
+    return idx
 
 
 ### ANCHOR: string modifier
@@ -55,8 +73,9 @@ def time_uuid() -> str:
     text = base64.urlsafe_b64encode(unique_value.to_bytes(8, "big")).decode().rstrip("=")
     return text.replace("-", "_")
 
+
 def simple_uuid():
     """Generate a simple random UUID of 4 digits."""
-    rnd_letter = random.choice(string.ascii_uppercase) # ascii_letters
+    rnd_letter = random.choice(string.ascii_uppercase)  # ascii_letters
     rnd_num = random.randint(100, 999)
     return f"{rnd_letter}{rnd_num}"
