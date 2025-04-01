@@ -1,11 +1,14 @@
 name: mkdocs gh-deploy
 
 on:
-  workflow_run:
-    workflows: ["changelog_ci.yml"]
-    types:
-      - completed
+#   workflow_run:
+#     workflows: ["changelog_ci.yml"]
+#     types:
+#       - completed
   workflow_dispatch:
+    inputs:
+        release_version:
+            description: 'Set Release Version'
   push:
     branches: [main, dev]
     paths-ignore:
