@@ -26,3 +26,4 @@ jobs:
         uses: saadmk11/changelog-ci@v1.1.2
         with:
           changelog_filename: _docs/CHANGELOG.md
+          release_version: ${{ github.event.inputs.release_version }} or 'Devel' # Set to 'dev' if not provided
