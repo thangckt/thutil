@@ -16,7 +16,7 @@ requires-python = ">=3.7"
 ### to use: pip install thmd[euler]
 [project.optional-dependencies]
 # llm = ['google-generativeai']
-
+test = ['pytest', 'pytest-cov']
 
 [tool.setuptools_scm]
 write_to = "thutil/__version.py"
