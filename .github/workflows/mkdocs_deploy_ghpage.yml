@@ -1,6 +1,10 @@
 name: mkdocs gh-deploy
 
 on:
+  workflow_run:
+    workflows: ["changelog_ci.yml"]
+    types:
+      - completed
   workflow_dispatch:
   push:
     branches: [main, dev]
