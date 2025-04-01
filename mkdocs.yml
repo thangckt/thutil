@@ -181,6 +181,7 @@ nav:
 
   - thutil:
       - About: index.md
+      - Changelog: CHANGELOG.md
       - Some utils:
         - config: config.md
         - io: io.md
