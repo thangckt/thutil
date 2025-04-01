@@ -9,9 +9,9 @@ copyright: Copyright &copy; 2022 <a href="https://thangckt.github.io">thangckt</
 
 ## Configuration
 theme:
-  name: "material" #  "material"    "mkdocs"    "readthedocs"     'rtd-dropdown'   windmill  bootswatch
+  name: material                         # material  mkdocs  readthedocs  'rtd-dropdown'  windmill  bootswatch
   custom_dir: _docs/_overrides
-  logo: 1images/one-note-128-o.png   # kde_color_128x128.png  one-note-128-o.png snake1.png
+  logo: 1images/one-note-128-o.png       # one-note-128-o.png     my_picture3x3.jpg    one-note-128-y.png  snake1  monkey
   favicon: 1images/one-note-128-o.png
   highlightjs: true
   features:
