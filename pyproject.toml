@@ -20,7 +20,9 @@ test = ['pytest', 'pytest-cov']
 
 [tool.setuptools_scm]
 write_to = "thutil/__version.py"
-fallback_version = "0.1"
+version_scheme = "python-simplified-semver"
+local_scheme = "no-local-version"
+fallback_version = "0.1.0"
 
 [tool.setuptools.packages.find]
 include = ["thutil*"]
