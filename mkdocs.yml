@@ -184,6 +184,7 @@ nav:
       - Changelog: CHANGELOG.md
       - Some utils:
         - config: config.md
+        - dispatcher: dispatcher.md
         - io: io.md
         - path: path.md
         - pkg: pkg.md
