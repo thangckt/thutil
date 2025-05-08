@@ -76,7 +76,7 @@ def submit_job_chunk(
     num_tasks = len(task_list)
     machine_dict = mdict["machine"]
     text = text_color(
-        f"Assigned {num_tasks} jobs to Machine {machine_index} \n{remote_info(machine_dict)}",
+        f"Assigned {num_tasks} jobs to Machine {machine_index} \n{_remote_info(machine_dict)}",
         color=_COLOR_MAP[machine_index],
     )
     Logger.info(text)
@@ -88,7 +88,7 @@ def submit_job_chunk(
     for chunk_index, task_list_current_chunk in enumerate(chunks):
         num_tasks_current_chunk = len(task_list_current_chunk)
         new_time = time.time()
-        text = info_current_dispatch(
+        text = _info_current_dispatch(
             num_tasks,
             num_tasks_current_chunk,
             job_limit,
@@ -128,7 +128,7 @@ async def async_submit_job_chunk(
     num_tasks = len(task_list)
     machine_dict = mdict["machine"]
     text = text_color(
-        f"Assigned {num_tasks} jobs to Machine {machine_index} \n{remote_info(machine_dict)}",
+        f"Assigned {num_tasks} jobs to Machine {machine_index} \n{_remote_info(machine_dict)}",
         color=_COLOR_MAP[machine_index],
     )
     Logger.info(text)
@@ -140,7 +140,7 @@ async def async_submit_job_chunk(
     for chunk_index, task_list_current_chunk in enumerate(chunks):
         num_tasks_current_chunk = len(task_list_current_chunk)
         timer[f"newtime_{machine_index}"] = time.time()
-        text = info_current_dispatch(
+        text = _info_current_dispatch(
             num_tasks,
             num_tasks_current_chunk,
             job_limit,
@@ -158,7 +158,7 @@ async def async_submit_job_chunk(
             backward_common_files=backward_common_files,
         )
         # await asyncio.to_thread(submission.run_submission, check_interval=30)  # this is old, may cause (10054) error
-        await run_submission_wrapper(submission, check_interval=30, machine_index=machine_index)
+        await _run_submission_wrapper(submission, check_interval=30, machine_index=machine_index)
         timer[f"oldtime_{machine_index}"] = timer[f"newtime_{machine_index}"]
     return
 
@@ -172,7 +172,7 @@ def _get_machine_lock(machine_index):
     return _machine_locks[machine_index]
 
 
-async def run_submission_wrapper(submission, check_interval=30, machine_index=0):
+async def _run_submission_wrapper(submission, check_interval=30, machine_index=0):
     """Ensure only one instance of 'submission.run_submission' runs at a time.
     - If use one global lock for all machines, it will prevent concurrent execution of submissions on different machines. Therefore, each machine must has its own lock, so different machines can process jobs in parallel.
     """
@@ -191,7 +191,7 @@ async def run_submission_wrapper(submission, check_interval=30, machine_index=0)
 _COLOR_MAP = {0: "blue", 1: "green", 2: "cyan", 3: "yellow", 4: "red", 5: "purple"}
 
 
-def info_current_dispatch(
+def _info_current_dispatch(
     num_tasks: int,
     num_tasks_current_chunk: int,
     job_limit,
@@ -215,7 +215,7 @@ def info_current_dispatch(
     return text
 
 
-def remote_info(machine_dict) -> str:
+def _remote_info(machine_dict) -> str:
     """Return the remote machine information.
     Args:
         mdict (dict): the machine dictionary
