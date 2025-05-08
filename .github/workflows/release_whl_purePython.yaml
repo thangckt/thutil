@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: wheel-${{ matrix.os }}-py${{ matrix.python-version }}
-          path: dist/*.whl
+          path: ./dist/*.whl
 
 
   upload_pypi:
@@ -50,7 +50,7 @@ jobs:
     permissions:
       id-token: write
     # if: github.event_name == 'release' && github.event.action == 'published'
-    if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/tags/dev') || github.ref == 'refs/heads/main')
+    if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/tags/dev') || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev')
 
     steps:
       - uses: pypa/gh-action-pypi-publish@release/v1
