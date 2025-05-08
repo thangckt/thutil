@@ -1,5 +1,7 @@
 ### REF: https://github.com/pypa/gh-action-pypi-publish
-name: Build and release to pypi
+# https://github.com/pypa/cibuildwheel/blob/main/examples/github-deploy.yml
+
+name: Build wheels and release to pypi
 
 on:
   push:
@@ -8,25 +10,49 @@ on:
   pull_request:
 
 jobs:
-  pypi-publish:
-    name: Upload release to PyPI
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write    # IMPORTANT: this permission is mandatory for trusted publishing
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-latest]
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup python
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.x
-        architecture: x64
+      - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: python -m pip install build
-    - run: python -m build --wheel
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.23.3
+        # env:
+        #   CIBW_SOME_OPTION: value
+        #   ...
+        # with:
+        #   package-dir: .
+        #   output-dir: wheelhouse
+        #   config-file: "{package}/pyproject.toml"
 
-    - name: Publish a Python distribution to PyPI
-      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        verbose: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
+
+
+  upload_pypi:
+    needs: [build_wheels, build_sdist]
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    # if: github.event_name == 'release' && github.event.action == 'published'
+    # or, alternatively, upload to PyPI on every tag starting with 'v' (remove on: release above to use this)
+    if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/tags/dev'))
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          # unpacks all CIBW artifacts into dist/
+          pattern: cibw-*
+          path: dist
+          merge-multiple: true
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # To test: repository-url: https://test.pypi.org/legacy/
