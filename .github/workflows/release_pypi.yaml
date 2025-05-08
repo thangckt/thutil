@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          # unpacks all CIBW artifacts into dist/
+          # unpacks all CIBW artifacts into folder `dist/`
           pattern: cibw-*
           path: dist
           merge-multiple: true
