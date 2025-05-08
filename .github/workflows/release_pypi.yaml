@@ -15,7 +15,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-latest]
+        os: [ubuntu-latest]  # [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-latest]
+        python-version: [3.12] # [ 3.9, 3.10, 3.11, 3.12, 3.13 ]
 
     steps:
       - uses: actions/checkout@v4
@@ -25,10 +26,11 @@ jobs:
         # env:
         #   CIBW_SOME_OPTION: value
         #   ...
-        # with:
-        #   package-dir: .
-        #   output-dir: wheelhouse
-        #   config-file: "{package}/pyproject.toml"
+        with:
+          # package-dir: .
+          # output-dir: wheelhouse
+          # config-file: "{package}/pyproject.toml"
+          python-version: ${{ matrix.python-version }}
 
       - uses: actions/upload-artifact@v4
         with:
