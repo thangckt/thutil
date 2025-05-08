@@ -1,0 +1,58 @@
+### REF: https://github.com/pypa/gh-action-pypi-publish
+# https://github.com/pypa/cibuildwheel/blob/main/examples/github-deploy.yml
+
+name: Build pure-Python wheels and release to pypi
+
+on:
+  push:
+    branches: [main, dev]
+    tags: ["v*", dev*]
+  pull_request:
+
+jobs:
+  build_wheels:
+    name: Build wheel on ${{ matrix.os }} with Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]  # [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-13, macos-latest]
+        python-version: ['3.12']   # ['3.9', '3.10', '3.11', '3.12']
+        # exclude:   # Optionally exclude specific combinations to reduce build time
+        #   - os: macos-latest
+        #     python-version: '3.9'  # Example exclusion
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install build tools
+        run: pip install build
+
+      - name: Build wheel
+        run: python -m build --wheel
+
+      - name: Upload wheel as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheel-${{ matrix.os }}-py${{ matrix.python-version }}
+          path: dist/*.whl
+
+
+  upload_pypi:
+    name: Upload to PyPI
+    needs: [build_wheels]
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    # if: github.event_name == 'release' && github.event.action == 'published'
+    if: github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/tags/dev') || github.ref == 'refs/heads/main')
+
+    steps:
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        # with:
+          # To test: repository-url: https://test.pypi.org/legacy/

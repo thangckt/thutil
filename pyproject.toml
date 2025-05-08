@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "thutil"
+dynamic = ["version"]
+description = "General utilities for Python"
+authors = [{ name = "C.Thang Nguyen", email = "thangckt@gmail.com" }]
+license = { file = "LICENSE.md" }
+
+dependencies = ['pyyaml', 'requests', "cerberus", "omegaconf"]
+
+requires-python = ">=3.9"
+
+### to use: pip install thmd[euler]
+[project.optional-dependencies]
+# llm = ['google-generativeai']
+test = ['pytest', 'pytest-cov']
+
+[tool.setuptools_scm]
+write_to = "thutil/__version.py"
+fallback_version = "0.1"
+
+[tool.setuptools.packages.find]
+include = ["thutil*"]
+exclude = ["1devtool*", "_docs*"]
+
+
+[tool.setuptools.package-data]
+# thutil = ['_cookie_file/*']

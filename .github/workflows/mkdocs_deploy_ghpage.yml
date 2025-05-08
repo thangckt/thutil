@@ -1,0 +1,54 @@
+name: mkdocs gh-deploy
+
+on:
+  workflow_run:
+    workflows: ["changelog_ci.yml"]
+    types:
+      - completed
+#   workflow_dispatch:
+#     inputs:
+#         release_version:
+#             description: 'Set Release Version'
+  push:
+    branches: [main, dev]
+    paths-ignore:
+      - "1devtool/**"
+      - "*.egg-info/**"
+      - "dist/**"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    name: MkDocs Github Pages automatic deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies # mkdocs-jupyter can cause broken in tabs-header
+        run: |
+          pip install git+https://github.com/thangckt/mkdocs-material.git@main     # main  v9.4.9 tabs_header_yinkh
+          pip install mkdocstrings[python]>=0.24
+
+          # pip install mkdocs-jupyter # conflict
+          # pip install mkdocs-enumerate-headings-plugin #  mkdocs
+
+
+      - name: fetch extra javascript
+        run: |
+          python _docs/_script/fetch_js.py
+
+    #   - name: Run Changelog CI  # https://github.com/saadmk11/changelog-ci
+    #     uses: saadmk11/changelog-ci@v1.1.2
+    #     with:
+    #       changelog_filename: ./_docs/CHANGELOG.md
+    #       release_version: ${{ github.event.inputs.release_version }} or 'Devel' # Set to 'dev' if not provided
+
+
+      - name: MkDocs build & deploy site # This will create `gh-pages` branch contain `mkdocs-site`. See https://www.mkdocs.org/user-guide/cli/#mkdocs-gh-deploy
+        run: mkdocs gh-deploy --force --verbose

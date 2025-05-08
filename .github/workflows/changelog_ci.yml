@@ -1,0 +1,29 @@
+# REF: https://github.com/saadmk11/changelog-ci
+
+name: Changelog CI
+
+on:
+  # push:
+  #   branches: [main, dev]
+  # pull_request:
+  #   types: [ opened ]
+
+  # Optionally you can use `workflow_dispatch` to run Changelog CI Manually
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Set Release Version'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run Changelog CI
+        uses: saadmk11/changelog-ci@v1.1.2
+        with:
+          changelog_filename: _docs/CHANGELOG.md
+          release_version: ${{ github.event.inputs.release_version }} or 'Devel' # Set to 'dev' if not provided
