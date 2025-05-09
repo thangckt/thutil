@@ -259,7 +259,7 @@ def _prepare_task_list_alff(
     task_list = [None] * len(task_dirs)
     for i, path in enumerate(task_dirs):
         task_list[i] = Task(
-            command=command_list,
+            command=command,
             task_work_path=path,
             forward_files=forward_files,
             backward_files=backward_files,
