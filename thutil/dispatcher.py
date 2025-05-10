@@ -317,7 +317,7 @@ async def async_submit_job_multi_remotes(
         command_list = prepare_command_list(cur_mdict)
         task_list = _prepare_task_list_alff(
             command_list=command_list,
-            task_dirs=task_dirs,
+            task_dirs=current_task_dirs,
             forward_files=forward_files,
             backward_files=backward_files,
             outlog=f"{mdict_prefix}_out.log",
